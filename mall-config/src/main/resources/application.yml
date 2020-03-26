@@ -1,0 +1,31 @@
+server:
+  port: 8089
+
+spring:
+  #profiles:
+   # active: dev
+  application:
+    name: mall-config
+  devtools:
+    restart:
+      enabled: true
+    freemarker:
+      cache: false
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+    #--------指定远程仓库信息----
+    # clientApplication客户端启动时候获取分支上的配置参数${from}时候,配置中心会从git仓库拉取colo-dev.properties,colo.properties等文件到本地
+    # 例如:Adding property source: file:/C:/Users/600336/AppData/Local/Temp/config-repo-1543229677936769440/spring-cloud-config-file/colo-dev.properties
+    config:
+      server:
+        git:
+          #配置Git仓库的地址
+          uri: https://github.com/zhouchao1992/springcloud-config
+          #配置仓库路径下的相对搜索位置，可以配置多个
+          search-paths: springcloud-config
+          #这里配置你的Git仓库的用户名
+          username: zhouchao1992
+          #这里配置你的Git仓库的密码
+          password: woaibaobei1314.@zhouchao

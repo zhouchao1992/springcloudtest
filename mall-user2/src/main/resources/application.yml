@@ -1,0 +1,17 @@
+server:
+  port: 8012
+#debug: true
+
+spring:
+  application:
+    name: mall-user
+
+  devtools:
+    restart:
+      enabled: true
+    freemarker:
+      cache: false
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
