@@ -1,4 +1,4 @@
-package com.zc.user.entity;
+package com.zc.user2.entity;
 
 import lombok.Data;
 

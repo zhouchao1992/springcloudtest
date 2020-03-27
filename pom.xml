@@ -20,7 +20,8 @@
         <module>mall-user</module>
         <module>mall-gateway</module>
         <module>mall-config</module>
-        <module>mall-user2</module>
+        <module>mall-usertwo</module>
+        <module>mall-security</module>
     </modules>
 
     <properties>

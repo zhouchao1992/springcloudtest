@@ -1,0 +1,53 @@
+server:
+  port: 8111
+
+spring:
+  application:
+    name: mall-gateway
+    #热部署配置
+  devtools:
+    restart:
+      enabled: true
+    freemarker:
+      cache: false
+  cloud:
+    #gateway网关配置
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true #将路由名称转换为小写
+      #路由规则配置
+      routes:
+        - id: user-service   #路由名称
+          uri: lb://mall-user  #实际转发的url   在注册中心中的微服务名称
+          #order: 0
+          predicates:
+            - Path=/user/**    #添加请求路径前缀
+          filters:
+            - StripPrefix=1    #请求时截取请求路径中的路径   也就是去掉-Path=xxxx  的路径
+    #consul注册中心配置
+    consul:
+      host: localhost
+      port: 8500
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - USER
+        -
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+
+#spring security 放心路径
+release:
+  url:
+    - /mall-user/user/login
+    - /mall-user/user/info

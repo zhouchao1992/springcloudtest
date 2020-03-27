@@ -1,20 +1,17 @@
 server:
-  port: 8010
+  port: 8114
 
 spring:
   application:
-    name: mall-gateway
+    name:  mall-user
   devtools:
     restart:
       enabled: true
     freemarker:
       cache: false
   cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
     consul:
       host: localhost
       port: 8500
+
+

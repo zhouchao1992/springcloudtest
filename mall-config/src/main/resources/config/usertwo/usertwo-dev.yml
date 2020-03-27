@@ -1,11 +1,9 @@
 server:
-  port: 8012
-#debug: true
+  port: 8113
 
 spring:
   application:
     name: mall-user
-
   devtools:
     restart:
       enabled: true

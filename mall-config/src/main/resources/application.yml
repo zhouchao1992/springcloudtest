@@ -1,9 +1,6 @@
 server:
   port: 8089
-
 spring:
-  #profiles:
-   # active: dev
   application:
     name: mall-config
   devtools:
@@ -11,21 +8,43 @@ spring:
       enabled: true
     freemarker:
       cache: false
+  profiles:
+    active: native #使用本地配置，要使用git存储改为git即可
   cloud:
     consul:
       host: localhost
       port: 8500
-    #--------指定远程仓库信息----
-    # clientApplication客户端启动时候获取分支上的配置参数${from}时候,配置中心会从git仓库拉取colo-dev.properties,colo.properties等文件到本地
-    # 例如:Adding property source: file:/C:/Users/600336/AppData/Local/Temp/config-repo-1543229677936769440/spring-cloud-config-file/colo-dev.properties
     config:
       server:
+        native: #本地仓库存储
+          search-locations: classpath:/config/{application}
+        #--------指定远程仓库信息----
+        # clientApplication客户端启动时候获取分支上的配置参数${from}时候,配置中心会从git仓库拉取colo-dev.properties,colo.properties等文件到本地
+        # 例如:Adding property source: file:/C:/Users/600336/AppData/Local/Temp/config-repo-1543229677936769440/spring-cloud-config-file/colo-dev.properties
         git:
           #配置Git仓库的地址
           uri: https://github.com/zhouchao1992/springcloud-config
-          #配置仓库路径下的相对搜索位置，可以配置多个
-          search-paths: springcloud-config
+          #配置仓库路径下的相对搜索位置，可以配置多个 若有多个路径使用逗号隔开  加/** 和不加的区别在于：
+          #如果你在springcloud-config项目中创建了多个子目录不加/**是找不到子目录的，只会找到springcloud-config目录下的文件
+          #所以如果git上的配置文件创建了每个微服务自己的文件夹来存放自己的配置就必须加上/**
+          search-paths: /**
           #这里配置你的Git仓库的用户名
           username: zhouchao1992
           #这里配置你的Git仓库的密码
           password: woaibaobei1314.@zhouchao
+  #--------------------------------------------------------------------消息总线配置，git上配置文件修改后实现自动刷新 start----------------------------------------------------------------------->
+  # 配置rabbitmq的地址以及用户密码
+  #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
+  #rabbitmq:
+    #host: 127.0.0.1
+    #port: 15672
+    #username: guest
+    #password: guest
+  # 允许/actuator/bus-refresh接口被外部调用
+  # SpringCloud 2.0.0版本以后暴露接口方式
+management:
+  endpoints:
+    web:
+      exposure:
+        include: /actuator/bus-refresh
+  #----------------------------------------------------------------end--------------------------------------------------------------------------->
